@@ -10,26 +10,26 @@
 class BiPos
 {
     public:
-        BiPos(size_t irunID = 0, size_t iGTID = 0)
+        BiPos(UInt_t irunID = 0, UInt_t iGTID = 0)
         {
             runID = irunID;
             GTID = iGTID;
         }
 
-        size_t GetRunID() const {return runID;}
-        void SetRunID(const size_t irunID) {runID = irunID;}
+        UInt_t GetRunID() const {return runID;}
+        void SetRunID(const UInt_t irunID) {runID = irunID;}
 
-        size_t GetSubRunID() const {return subRunID;}
-        void SetSubRunID(const size_t isubRunID) {subRunID = isubRunID;}
+        UInt_t GetSubRunID() const {return subRunID;}
+        void SetSubRunID(const UInt_t isubRunID) {subRunID = isubRunID;}
 
-        size_t GetEntry() const {return entry;}
-        void SetEntry(const size_t iEntry) {entry = iEntry;}
+        UInt_t GetEntry() const {return entry;}
+        void SetEntry(const UInt_t iEntry) {entry = iEntry;}
 
-        size_t GetEV() const {return EV;}
-        void SetEV(const size_t iEV) {EV = iEV;}
+        UInt_t GetEV() const {return EV;}
+        void SetEV(const UInt_t iEV) {EV = iEV;}
 
-        size_t GetGTID() const {return GTID;}
-        void SetGTID(const size_t iGTID) {GTID = iGTID;}
+        UInt_t GetGTID() const {return GTID;}
+        void SetGTID(const UInt_t iGTID) {GTID = iGTID;}
 
         std::string GetFileName() const {return fileName;}
         void SetFileName(const std::string iFileName) {fileName = iFileName;}
@@ -41,11 +41,11 @@ class BiPos
     protected:
         std::string directory = "/nfs/disk4/ratds_230515_230715_bronze/";
     private:
-        size_t runID;
-        size_t subRunID;
-        size_t entry;
-        size_t EV;
-        size_t GTID;
+        UInt_t runID;
+        UInt_t subRunID;
+        UInt_t entry;
+        UInt_t EV;
+        UInt_t GTID;
         std::string fileName;
 };
 
@@ -154,3 +154,7 @@ TCanvas* BiPos::PlotWaveforms()
 
 // runID = 310365, subRunID = 6, entry = 130684, EV = 0, GTID = 1834806
 // fileName = "/nfs/disk4/ratds_230515_230715_bronze/Analysis20_r0000310365_s006_p000.root"
+
+// Out window BiPos events for testing
+// runID = 309665, subRunID = 9, entry = 62028 and 62029, EV = 0, GTID = 10626139 and 10626140
+// fileName ="/nfs/disk4/ratds_230515_230715_bronze/Analysis20_r0000309665_s009_p000.root"
