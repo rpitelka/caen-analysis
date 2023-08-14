@@ -19,9 +19,6 @@ class BiPos
         UInt_t GetRunID() const {return runID;}
         void SetRunID(const UInt_t irunID) {runID = irunID;}
 
-        UInt_t GetSubRunID() const {return subRunID;}
-        void SetSubRunID(const UInt_t isubRunID) {subRunID = isubRunID;}
-
         UInt_t GetEntry() const {return entry;}
         void SetEntry(const UInt_t iEntry) {entry = iEntry;}
 
@@ -34,6 +31,8 @@ class BiPos
         std::string GetFileName() const {return fileName;}
         void SetFileName(const std::string iFileName) {fileName = iFileName;}
 
+        int ReadFile(const std::string ifileName);
+        
         void FindLocation();
 
         TCanvas* PlotWaveforms();
@@ -42,12 +41,35 @@ class BiPos
         std::string directory = "/nfs/disk4/ratds_230515_230715_bronze/";
     private:
         UInt_t runID;
-        UInt_t subRunID;
         UInt_t entry;
         UInt_t EV;
         UInt_t GTID;
         std::string fileName;
 };
+
+int BiPos::ReadFile(const std::string ifileName)
+{
+    RAT::DU::DSReader dsReader(ifileName);
+    for (size_t iEntry = 0; iEntry < dsReader.GetEntryCount(); iEntry++)
+    {
+        const RAT::DS::Entry &rDS = dsReader.GetEntry(iEntry);
+        for (size_t iEV = 0; iEV < rDS.GetEVCount(); iEV++)
+        {
+            size_t retrievedID = rDS.GetEV(iEV).GetGTID();
+            if (retrievedID == GTID)
+            {
+                fileName = ifileName;
+                std::cout << "Entry = " << std::to_string(iEntry) << std::endl;
+                entry = iEntry;
+                std::cout << "EV = " << std::to_string(iEV) << std::endl;
+                EV = iEV;
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
+
 
 /// Locate the file containing a tagged BiPos event using its runID and GTID
 void BiPos::FindLocation()
@@ -60,33 +82,15 @@ void BiPos::FindLocation()
             subRunStr = "0" + subRunStr;
         }
         std::string ifileName = directory + "Analysis20_r0000"+ std::to_string(runID) + "_s0" + subRunStr + "_p000.root";
-        std::cout << ifileName << std::endl;
         std::ifstream file(ifileName);
         if (file.good())
         {
-            RAT::DU::DSReader dsReader(ifileName);
-            for (size_t iEntry = 0; iEntry < dsReader.GetEntryCount(); iEntry++)
-            {
-                const RAT::DS::Entry &rDS = dsReader.GetEntry(iEntry);
-                for (size_t iEV = 0; iEV < rDS.GetEVCount(); iEV++)
-                {
-                    size_t retrievedID = rDS.GetEV(iEV).GetGTID();
-                    if (retrievedID == GTID)
-                    {
-                        fileName = ifileName;
-                        std::cout << "subRunID = " << std::to_string(isubRunID) << std::endl;
-                        subRunID = isubRunID;
-                        std::cout << "Entry = " << std::to_string(iEntry) << std::endl;
-                        entry = iEntry;
-                        std::cout << "EV = " << std::to_string(iEV) << std::endl;
-                        EV = iEV;
-                        return;
-                    }
-                }
-            }
+            std::cout << ifileName << std::endl;
+            int result = ReadFile(ifileName);
+            if (result == 1) {return;}
         }
     }
-    std::cout << "GTID not found. Please set runID and GTID." << std::endl;
+    std::cout << "GTID not found. Please set valid runID and GTID." << std::endl;
 }
 
 /// Plot the CAEN trigger sums for a tagged BiPos event
