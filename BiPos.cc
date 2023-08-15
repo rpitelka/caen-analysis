@@ -29,7 +29,7 @@ class BiPos
         void SetGTID(const UInt_t iGTID) {GTID = iGTID;}
 
         std::string GetFileName() const {return fileName;}
-        void SetFileName(const std::string iFileName) {fileName = iFileName;}
+        void SetFileName(const std::string ifileName) {fileName = ifileName;}
 
         int ReadFile(const std::string ifileName);
         
@@ -47,6 +47,10 @@ class BiPos
         std::string fileName;
 };
 
+/// Read a file to find a BiPos event by its GTID
+///
+/// @param[in] fileName of the RAT::DS root file to read
+/// @return int 1 if matching GTID found, 0 if not
 int BiPos::ReadFile(const std::string ifileName)
 {
     RAT::DU::DSReader dsReader(ifileName);
@@ -69,7 +73,6 @@ int BiPos::ReadFile(const std::string ifileName)
     }
     return 0;
 }
-
 
 /// Locate the file containing a tagged BiPos event using its runID and GTID
 void BiPos::FindLocation()

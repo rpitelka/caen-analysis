@@ -1,6 +1,25 @@
 #include <iostream>
 #include <string>
+#include <RAT/DU/DSReader.hh>
+#include <RAT/DS/Entry.hh>
 
+/// From Tereza
+std::vector<UShort_t> GetCAENTrace(const RAT::DS::EV &triggeredEvent) {
+    /*
+     * Given a triggered SMELLIE event, obtain the MPU's CAEN trace.
+     * If this is not possible, raise the RAT::DS::DataNotFound exception.
+     */
+    RAT::DS::Digitiser digitiser;
+    try { digitiser = triggeredEvent.GetDigitiser(); }
+    catch (RAT::DS::DataNotFound& e) { throw; }
+
+    const int PMU_CAEN_channel = 3;
+    return digitiser.GetWaveform(PMU_CAEN_channel);
+}
+
+/// Print first GTID of each subrun for a given runID
+///
+/// @param[in] runID to iterate through
 void printGTIDs(UInt_t runID)
 {
     for (int isubRunID = 0; isubRunID < 13; isubRunID++)
