@@ -43,3 +43,7 @@ void printGTIDs(UInt_t runID)
 // Out window BiPos events for testing
 // runID = 309665, subRunID = 9, entry = 62028 and 62029, EV = 0, GTID = 10626139 and 10626140
 // fileName ="/nfs/disk4/ratds_230515_230715_bronze/Analysis20_r0000309665_s009_p000.root"
+
+// Simulated Bi214
+// runID = 0, entry = 0, ev = 0, GTID = 0
+// fileName = "/nfs/disk3/kroupa/caen_traces/Simulation_r22.root"

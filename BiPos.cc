@@ -111,13 +111,18 @@ TCanvas* BiPos::PlotWaveforms()
     const RAT::DS::Digitiser &digitiser = rDS.GetEV(EV).GetDigitiser();
     std::vector<UShort_t> ids = digitiser.GetIDs();
     // BiPos ids: 4, 10, 20, 40 -> Delayed N20, N100L, N20, ESUMH
-    // Swap N20 with Delayed N20 for plotting purposes
-    std::swap(ids[0], ids[2]);
     // Calculate a good way to divide the canvas base upon the number of signals
     size_t size = ids.size();
     int y = size < 4 ? 1 : 2;
     int x = ceil(float(size) / y);
     c1->Divide(x, y);
+    
+    // Swap N20 with Delayed N20 for plotting purposes
+    if (size >= 4)
+    {
+        if (ids[0] == 4 && ids[2] == 20)
+            std::swap(ids[0], ids[2]);
+    }
 
     for (size_t iWaveform = 0; iWaveform < ids.size(); iWaveform++)
     {
@@ -154,14 +159,3 @@ TCanvas* BiPos::PlotWaveforms()
     c1->cd();
     return c1;
 }
-
-// In window BiPos events for testing
-// runID = 309622, subRunID = 4, entry = 284290, EV = 0, GTID 11220168
-// fileName = "/nfs/disk4/ratds_230515_230715_bronze/Analysis20_r0000309622_s004_p000.root"
-
-// runID = 310365, subRunID = 6, entry = 130684, EV = 0, GTID = 1834806
-// fileName = "/nfs/disk4/ratds_230515_230715_bronze/Analysis20_r0000310365_s006_p000.root"
-
-// Out window BiPos events for testing
-// runID = 309665, subRunID = 9, entry = 62028 and 62029, EV = 0, GTID = 10626139 and 10626140
-// fileName ="/nfs/disk4/ratds_230515_230715_bronze/Analysis20_r0000309665_s009_p000.root"
