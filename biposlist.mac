@@ -1,0 +1,34 @@
+# File: biposlist.mac
+# Brief: Macro that uses the runeventlist processor to get all bipos events from nfs/disk4 data.
+#
+# Date: 2023-02-03
+
+/rat/inroot/load FILENAME.root
+# /rat/inroot/load FILENAME2.root etc
+# what if I have hundreds of root files? any way to loop through all files in a directory?
+
+/run/initialize
+
+# BEGIN EVENT LOOP
+
+# processors that are to be run no matter what:
+/rat/proc count
+/rat/procset update 1000
+
+/rat/proc/if runeventlist
+
+    /rat/procset file "InWindow_BiPos_GTID.txt"
+    # /rat/procset file "OutWindow_BiPo212_GTID.txt"
+    # /rat/procset file "OutWindow_BiPo214_GTID.txt"
+
+    # processors to be run on an event only if its ID is in the text file:
+    /rat/proclast outroot
+    /rat/procset file "bipos.root"
+
+/rat/proc/endif
+
+# END EVENT LOOP
+
+/rat/inroot/read
+
+exit
