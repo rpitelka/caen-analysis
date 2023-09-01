@@ -1,11 +1,9 @@
 # File: biposlist.mac
 # Brief: Macro that uses the runeventlist processor to get all bipos events from nfs/disk4 data.
 #
-# Date: 2023-02-03
+# Date: 2023-08-31
 
-/rat/inroot/load FILENAME.root
-# /rat/inroot/load FILENAME2.root etc
-# what if I have hundreds of root files? any way to loop through all files in a directory?
+/rat/inroot/load FILENAME
 
 /run/initialize
 
