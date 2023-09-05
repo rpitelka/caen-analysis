@@ -27,6 +27,7 @@ def convertCSV(input_text):
 
     print("Conversion complete. Output saved to 'output.csv'")
 
-# input_text = "InWindow_BiPos_GTID.txt"
-input_text = "OutWindow_BiPo214_GTID.txt"
+input_text = "InWindow_BiPos_GTID.txt"
+# input_text = "OutWindow_BiPo212_GTID.txt"
+# input_text = "OutWindow_BiPo214_GTID.txt"
 convertCSV(input_text)

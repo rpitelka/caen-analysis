@@ -3,7 +3,7 @@
 #
 # Date: 2023-08-31
 
-/rat/inroot/load FILENAME
+/rat/inroot/load /nfs/disk4/ratds_230515_230715_bronze/FILENAME
 
 /run/initialize
 
@@ -11,17 +11,17 @@
 
 # processors that are to be run no matter what:
 /rat/proc count
-/rat/procset update 1000
+/rat/procset update 5000
 
 /rat/proc/if runeventlist
 
-    /rat/procset file "InWindow_BiPos_GTID.txt"
-    # /rat/procset file "OutWindow_BiPo212_GTID.txt"
-    # /rat/procset file "OutWindow_BiPo214_GTID.txt"
+    /rat/procset file "InWindow_BiPos_GTID.csv"
+    # /rat/procset file "OutWindow_BiPo212_GTID.csv"
+    # /rat/procset file "OutWindow_BiPo214_GTID.csv"
 
     # processors to be run on an event only if its ID is in the text file:
     /rat/proclast outroot
-    /rat/procset file "bipos.root"
+    /rat/procset file "FILENAME"
 
 /rat/proc/endif
 
