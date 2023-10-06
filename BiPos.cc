@@ -35,7 +35,9 @@ class BiPos
         
         void FindLocation();
 
-        TCanvas* PlotWaveforms();
+        TCanvas* PlotAllWaveforms();
+
+        TCanvas* PlotWaveform(const int targetID);
 
     protected:
         std::string directory = "/nfs/disk4/ratds_230515_230715_bronze/";
@@ -96,17 +98,17 @@ void BiPos::FindLocation()
     std::cout << "GTID not found. Please set valid runID and GTID." << std::endl;
 }
 
-/// Plot the CAEN trigger sums for a tagged BiPos event
+/// Plot all CAEN trigger sums for a tagged BiPos event
 /// Modified from rat/example/root/PlotCAEN.cc
 ///
 /// @return the canvas
-TCanvas* BiPos::PlotWaveforms()
+TCanvas* BiPos::PlotAllWaveforms()
 {
     RAT::DU::DSReader dsReader(fileName);
     const RAT::DS::Entry &rDS = dsReader.GetEntry(entry);
     if (rDS.GetEVCount() == 0) // No events to plot
         return NULL;
-
+    
     TCanvas *c1 = new TCanvas();
     const RAT::DS::Digitiser &digitiser = rDS.GetEV(EV).GetDigitiser();
     std::vector<UShort_t> ids = digitiser.GetIDs();
@@ -154,8 +156,70 @@ TCanvas* BiPos::PlotWaveforms()
         else {title = "Unknown";}
 
         graph->SetTitle(title.c_str());
+        graph->GetYaxis()->SetTitle( "Amplitude (ADC Units)" );
+        graph->GetXaxis()->SetTitle( "Sample Time (4 ns)" );
         graph->Draw("AL*");
     }
     c1->cd();
+    return c1;
+}
+
+/// Plot a specific CAEN trigger sum for a tagged BiPos event
+/// Modified from rat/example/root/PlotCAEN.cc
+///
+/// @return the canvas
+TCanvas* BiPos::PlotWaveform(const int targetID)
+{
+    RAT::DU::DSReader dsReader(fileName);
+    const RAT::DS::Entry &rDS = dsReader.GetEntry(entry);
+    if (rDS.GetEVCount() == 0) // No events to plot
+        return NULL;
+    
+    TCanvas *c1 = new TCanvas();
+    const RAT::DS::Digitiser &digitiser = rDS.GetEV(EV).GetDigitiser();
+    std::vector<UShort_t> ids = digitiser.GetIDs();
+    // BiPos ids: 4, 10, 20, 40 -> Delayed N20, N100L, N20, ESUMH
+    auto it = std::find(ids.begin(), ids.end(), targetID);
+    size_t index;
+
+    if (it != ids.end())
+    {
+        // ID found
+        index =  std::distance(ids.begin(), it);
+    }
+    else
+    {
+        // ID not found
+        std::cout << "Element not found" << std::endl;
+    }
+
+    TGraph *graph = new TGraph();
+    int id = ids[index];
+    std::vector<UShort_t> waveform = digitiser.GetWaveform(id);
+
+    for (size_t iSample = 0; iSample < waveform.size(); iSample++)
+    {
+        graph->SetPoint(iSample, iSample, waveform.at(iSample));
+    }
+
+    // Assign a title to the plot by parsing the ID.
+    // The ID type*10+gain where type and gain are enumerated as specified
+    // in CAENBits.hh
+    std::string title;
+    // int type = id - (id % 10); // Round to the nearest multiple of 10
+    if(id == RAT::NH100Lo) {title = "N100L";}
+    else if(id == RAT::NH20Lo) {title = "N20";}
+    // else if(type == RAT::ESLoLo) {title = "ESUML";}
+    else if(id == RAT::ESHiLo) {title = "ESUMH";}
+    // else if(type == RAT::OWLNLo) {title = "OWLN";}
+    // else if(type == RAT::OWLELoLo) {title = "OWLEL";}
+    // else if(type == RAT::OWLEHiLo) {title = "OWLEH";}
+    else if(id == 4) {title = "Delayed N20";}
+    else {title = "Unknown";}
+
+    graph->SetTitle(title.c_str());
+    graph->GetYaxis()->SetTitle( "Amplitude (ADC Units)" );
+    graph->GetXaxis()->SetTitle( "Sample Time (4 ns)" );
+    graph->Draw("AL*");
     return c1;
 }
