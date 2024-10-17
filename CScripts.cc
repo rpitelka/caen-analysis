@@ -34,11 +34,57 @@ void printGTIDs(UInt_t runID)
 }
 
 // In window BiPos events for testing
-// runID = 309622, subRunID = 4, entry = 284290, EV = 0, GTID 11220168
+// runID = 309622, GTID 11220168
+// subRunID = 4, entry = 284290, EV = 0
 // fileName = "/nfs/disk4/ratds_230515_230715_bronze/Analysis20_r0000309622_s004_p000.root"
 
-// runID = 310365, subRunID = 6, entry = 130684, EV = 0, GTID = 1834806
+// runID = 310365, GTID = 1834806
+// subRunID = 6, entry = 130684, EV = 0
 // fileName = "/nfs/disk4/ratds_230515_230715_bronze/Analysis20_r0000310365_s006_p000.root"
+
+// runID = 309761, GTID = 16344385
+// subRunID = 1, entry = 186566, EV = 0
+// fileName = "/nfs/disk4/ratds_230515_230715_bronze/Analysis20_r0000309761_s001_p000.root"
+
+// runID = 310329, GTID = 15765140
+// subRunID = 4, entry = 77899, EV = 0
+// fileName = "/nfs/disk4/ratds_230515_230715_bronze/Analysis20_r0000310329_s004_p000.root"
+
+// runID = 310336, GTID = 82569
+// subRunID = , entry = 29637, EV = 0
+// fileName = "/nfs/disk4/ratds_230515_230715_bronze/Analysis20_r0000310336_s012_p000.root"
+
+// runID = 309623, GTID = 1292310
+// subRunID = 5, entry = 148530, EV = 0
+// fileName = "/nfs/disk4/ratds_230515_230715_bronze/Analysis20_r0000309623_s005_p000.root"
+
+// runID = 309624, GTID = 6235502
+// subRunID = 2, entry = 423288, EV = 0
+// fileName = "/nfs/disk4/ratds_230515_230715_bronze/Analysis20_r0000309624_s002_p000.root"
+
+// runID = 309624, GTID = 6944773
+// subRunID = 4, entry = 9080, EV = 0
+// fileName = "/nfs/disk4/ratds_230515_230715_bronze/Analysis20_r0000309624_s004_p000.root"
+
+// runID = 309624, GTID = 10035161
+// subRunID = 9, entry = 287149, EV = 0
+// fileName = "/nfs/disk4/ratds_230515_230715_bronze/Analysis20_r0000309624_s009_p000.root"
+
+// runID = 309625, GTID = 13869355
+// subRunID = 5, entry = 19546, EV = 0
+// fileName = "/nfs/disk4/ratds_230515_230715_bronze/Analysis20_r0000309625_s005_p000.root"
+
+// runID = 309743, GTID = 8385365 
+// subRunID = , entry = 415724, EV = 0
+// fileName = "/nfs/disk4/ratds_230515_230715_bronze/Analysis20_r0000309743_s008_p000.root"
+
+// runID = 309745, GTID = 2505814 
+// subRunID = 5, entry = 139206, EV = 0
+// fileName = "/nfs/disk4/ratds_230515_230715_bronze/Analysis20_r0000309745_s005_p000.root"
+
+// runID = 309753, GTID = 1961228 
+// subRunID = 2, entry = 209101, EV = 0
+// fileName = "/nfs/disk4/ratds_230515_230715_bronze/Analysis20_r0000309753_s002_p000.root"
 
 // Out window BiPos events for testing
 // runID = 309665, subRunID = 9, entry = 62028 and 62029, EV = 0, GTID = 10626139 and 10626140

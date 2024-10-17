@@ -21,20 +21,22 @@ def editMacro(macro_file_path, placeholder, replacement):
 # Execute the macro via the command line
 def runMacro(macro_file_path):
     # Replace 'macro_executable' with the actual command to run macro
-    macro_command = "q rat {}".format(macro_file_path)
+    macro_command = "rat {}".format(macro_file_path)
     subprocess.call(macro_command, shell=True)
 
 placeholder = "FILENAME"
-iteration_count = 0
+# iteration_count = 0
 for filename in os.listdir(directory_path):
-    if iteration_count % 50 == 0:
-        user_input = input("Press Enter to continue or 'q' to quit: ")
-        if user_input.lower() == 'q':
-            break  # Exit the loop if the user enters 'q'
+    # if iteration_count % 30 == 0:
+    #     user_input = raw_input("Press Enter to continue or 'q' to quit: ")
+    #     if user_input.lower() == 'q':
+    #         break  # Exit the loop if the user enters 'q'
     if filename.endswith(".root"):
         editMacro(macro_file_path, placeholder, filename)
         runMacro(macro_file_path)
         placeholder = filename
-        print(filename + " analyzed and saved")
+        print(filename + " submitted to queue")
+        # iteration_count = iteration_count + 1
     else:
         continue
+editMacro(macro_file_path, placeholder, "FILENAME")
